@@ -1,0 +1,346 @@
+<!-- Download the latest verion from: https://github.com/zapushkomivcho/mivka.html/ -->
+<html>
+<head>
+	<style>
+		body, canvas {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+	</style>
+	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'>
+	<meta charset='UTF-8'></meta> <!-- allows for cyrillic and other exotic text in console.logs -->
+</head>
+	<body  onload='init()' oncontextmenu='return false'>
+		<canvas id='canvas-id' width='800' height='600'>
+		<script>
+			const toolbox = {
+				randInt: function(a, b){
+					return Math.floor(Math.random()*(b - a)) + a;
+				},
+				xywh: function(x1, y1, w1, h1){
+				let a = {
+					x: x1,
+					y: y1,
+					w: w1,
+					h: h1
+				};
+				return a;
+				},
+				sleep: function(ms){
+ 					const date = Date.now();
+  					let currentDate = null;
+  					do{currentDate = Date.now();}while(currentDate - date < ms);
+				},
+				rec: {
+					x: undefined,
+					y: undefined
+				},
+				recordPosition: function(x, y){
+					toolbox.rec.x = x;
+					toolbox.rec.y = y;
+				},
+				save: function(data, memoryIndex){ //NOTE: memoryIndex IS A STRING!
+					localStorage.setItem(memoryIndex, JSON.stringify(data));
+				},
+				restore: function(memoryIndex){
+					return JSON.parse(localStorage.getItem(memoryIndex));
+				}
+			};
+			function areColliding(Ax, Ay, Awidth, Aheight, Bx, By, Bwidth, Bheight){
+				if (Bx <= Ax + Awidth){
+					if (Ax <= Bx + Bwidth){
+						if (By <= Ay + Aheight){
+							if (Ay <= By + Bheight){
+								return 1;
+							}
+						}
+					}
+				}
+				return 0;
+			};
+
+			function randomInteger(upTo){
+				return Math.floor(Math.random()*upTo);
+			}
+
+			function drawLine(startX, startY, endx, endy){
+				// For better performance bunch calls to lineTo without beginPath() and stroke() inbetween.
+				context.beginPath(); // resets the current path
+				context.moveTo(startX, startY);
+				context.lineTo(endx, endy);
+				context.stroke();
+			}
+
+			function tryToLoad(imageNameWithoutDotPng, backupColor){
+				result={};
+				result.img=new Image();
+				result.img.src = 'images/' + imageNameWithoutDotPng + '.png';
+				result.color=backupColor;
+				return result;
+			}
+
+			function tryToLoadWithFullPath(imageNameAndPath, backupColor){
+				result={};
+				result.img=new Image();
+				result.img.src = imageNameAndPath;
+				result.color=backupColor;
+				return result;
+			}
+
+			function drawImage(imageWithBackupColorObject, x, y, xs, ys){
+				try {
+					if (xs!==undefined){
+						context.drawImage(imageWithBackupColorObject.img, x, y, xs, ys);
+					} else {
+						context.drawImage(imageWithBackupColorObject.img, x, y);
+					}
+				} catch(e){
+					context.fillStyle = imageWithBackupColorObject.color;
+					if (xs == null){
+						xs = 100;
+						ys = 100;
+					}
+					context.fillRect(x, y, xs, ys);
+				}
+			}
+            function setCanvasSize(width_, height_){
+                canvas.width = width_;
+                canvas.height = height_;
+            }
+            function setFullscreen(){
+                setCanvasSize(window.innerWidth, window.innerHeight);
+            }
+			let updateTime = 10; // in ms
+			const canvas = document.getElementById('canvas-id');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let isUpdatePaused_ = false,
+                updateInterval = undefined;
+            
+            function isUpdatePaused(){
+                return isUpdatePaused_;
+            }
+            function pauseUpdate(){
+                clearInterval(updateInterval);    
+                isUpdatePaused_ = true;
+            }
+            function startUpdate(){
+                updateInterval = setInterval(update, updateTime);
+                isUpdatePaused_ = false;
+                redraw();
+            }
+            
+            // POLYGON FUNCTIONS
+            
+            // Distance between two points
+            function distance(x1, y1, x2, y2){
+                return Math.sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
+            }
+            
+            function getTriangleArea(x1, y1, x2, y2, x3, y3){
+                let a = distance(x1, y1, x2, y2),
+                    b = distance(x2, y2, x3, y3),
+                    c = distance(x1, y1, x3, y3),
+                    p = (a + b + c)/2;
+                return Math.sqrt(p*(p - a)*(p - b)*(p - c));
+            }
+            
+            function isInTriangle(pX, pY, x1, y1, x2, y2, x3, y3){
+                let S1 = getTriangleArea(pX, pY, x1, y1, x2, y2),
+                    S2 = getTriangleArea(pX, pY, x2, y2, x3, y3),
+                    S3 = getTriangleArea(pX, pY, x3, y3, x1, y1),
+                    S = getTriangleArea(x1,y1,x2,y2,x3,y3);
+                console.log(S1 + S2 + S3, S);
+                return Math.abs(S1 + S2 + S3 - S) < 5;
+            }
+            
+            function isInHexagon(cX, cY, vertex, pX, pY){
+                let x = [],
+                    y = [];
+                for(let i = 0; i < 6; i++){
+                    x[i] = Math.cos((i/3)*Math.PI)*vertex + cX;
+                    y[i] = Math.sin((i/3)*Math.PI)*vertex + cY;
+                }
+                let isInside = false;
+                for(let i = 0; i < 5; i++){
+                    isInside = isInside || isInTriangle(pX, pY, cX, cY, x[i], y[i], x[i + 1], y[i + 1]);
+                }
+                isInside = isInside || isInTriangle(pX, pY, cX, cY, x[0], y[0], x[5], y[5]);
+                return isInside;
+			}
+
+			function isInRectangle(pX, pY, rX, rY, rW, rH){
+	    		if(pX >= rX && pX <= rX + rW && pY >= rY && pY <= rY + rH)return true;
+	    		else return false;
+			}
+
+			function isInCircle(pX, pY, cX, cY, r){
+				if((pX - cX)*(pX - cX) + (pY - cY)*(pY - cY) <= r*r)return true;
+				else return false;
+			}
+	
+            // Creates a path for a hexagon
+            // Use with context.fill() ot context.stroke()
+            function traceHexagonPath(cX, cY, vertex){
+                context.beginPath();
+                for(let i = 0; i < 6; i++){
+                    let angle = (Math.PI/3)*i;
+                    let dx = Math.cos(angle)*vertex;
+                    let dy = Math.sin(angle)*vertex;
+                    let tX = cX + dx, tY = cY + dy;
+                    context.lineTo(tX, tY);
+                }
+                context.closePath();
+            }
+            </script>
+			<!-- user's file -->
+			<script type = 'application/javascript' src = 'program.js'></script>
+			<script>
+			const context = canvas.getContext('2d');
+			context.fillStyle = '#272727';
+            // global variables with mouse coordinates
+			let mouseX = 0;
+			let mouseY = 0;
+            // some keycodes
+			let key_left = 37;
+			let key_up = 38;
+            let key_right = 39;
+			let key_down = 40;
+			let key_a = 65;
+			let key_b = 66;
+			let key_c = 67;
+			let key_d = 68;
+			let key_e = 69;
+			let key_f = 70;
+			let key_g = 71;
+			let key_h = 72;
+			let key_i = 73;
+			let key_j = 74;
+			let key_k = 75;
+			let key_l = 76;
+			let key_m = 77;
+			let key_n = 78;
+			let key_o = 79;
+			let key_p = 80;
+			let key_q = 81
+			let key_r = 82;
+			let key_s = 83;
+			let key_t = 84;
+			let key_u = 85;
+			let key_v = 86;
+			let key_w = 87;
+			let key_x = 88;
+			let key_y = 89;
+			let key_z = 90;
+			let key_0 = 48;
+			let key_1 = 49;
+			let key_2 = 50;
+			let key_3 = 51;
+			let key_4 = 52;
+			let key_5 = 53;
+			let key_6 = 54;
+			let key_7 = 55;
+			let key_8 = 56;
+			let key_9 = 57;
+			let isKeyPressed = [];
+			for (i = 0; i < 256; i++){
+				isKeyPressed.push(false);
+			}
+			const reqAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || function(callback){
+				setTimeout(callback, 1000 / 30);
+			};
+			function redraw(){
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				draw(); // call progammer's draw() function
+				context.globalAlpha = 1;
+				// draw grid
+				//context.fillStyle = '#FF0000';
+				context.font = '10px Arial';
+				if (typeof gridSize != 'undefined' && gridSize >= 25){
+					context.fillText(0, 4, 10);
+					context.beginPath();
+					for(i = gridSize; i < canvas.width; i += gridSize){
+						context.moveTo(i, 0);
+						context.lineTo(i, canvas.height);
+						context.fillText(i, i + 4, 10);
+					}
+					for(i = gridSize; i < canvas.height; i += gridSize){
+						context.moveTo(0, i);
+						context.lineTo(canvas.width, i);
+						context.fillText(i, 4, i + 10);
+					}
+					context.stroke();
+				}
+                if(!isUpdatePaused_){
+				    reqAnimationFrame(redraw);
+                }
+			};
+
+			function init(){
+				if ('ontouchstart' in window || navigator.maxTouchPoints){
+					isMobile = true;
+					window.addEventListener('touchstart', function(e){
+						let touchobj = e.changedTouches[0];
+						mouseX = parseInt(touchobj.pageX - canvas.offsetLeft);
+						mouseY = parseInt(touchobj.pageY - canvas.offsetTop);
+						mousedown();
+					});
+					window.addEventListener('touchend', function(e){
+						let touchobj = e.changedTouches[0];
+						mouseX = parseInt(touchobj.pageX - canvas.offsetLeft);
+						mouseY = parseInt(touchobj.pageY - canvas.offsetTop);
+						mouseup();
+					});
+					window.addEventListener('touchmove', function(e){
+						let touchobj = e.changedTouches[0];
+						mouseX = parseInt(touchobj.pageX - canvas.offsetLeft);
+						mouseY = parseInt(touchobj.pageY - canvas.offsetTop);
+					});
+				}
+				window.addEventListener('mousemove', function(e){
+					mouseX = e.pageX - canvas.offsetLeft;
+					mouseY = e.pageY - canvas.offsetTop;
+				});
+				if(typeof mousemove != 'undefined'){
+					window.addEventListener('mousemove', mousemove);
+				}
+				if(typeof mouseup != 'undefined'){
+					window.addEventListener('mouseup', mouseup);
+				}
+				if(typeof mousedown != 'undefined'){
+					window.addEventListener('mousedown', mousedown);
+				}
+				if(typeof keydown != 'undefined'){
+					window.addEventListener('keydown', function(e){
+						isKeyPressed[e.keyCode] = true;
+						keydown(e.keyCode);
+					});
+				} else {
+					window.addEventListener('keydown', function(e){
+						isKeyPressed[e.keyCode] = true;
+					});
+				}
+				if(typeof keyup != 'undefined'){
+					window.addEventListener('keyup', function(e){
+						isKeyPressed[e.keyCode] = false;
+						keyup(e.keyCode);
+					});
+				} else {
+					window.addEventListener('keyup', function(e){
+						isKeyPressed[e.keyCode] = false;
+					});
+				}
+				if(typeof draw == 'undefined'){
+					redraw = function(){
+						context.clearRect(0, 0, canvas.width, canvas.height);
+						alert('draw() function not defined anywhere (either that or you fucked up big time)');
+					};
+				}
+				redraw();
+				updateInterval = setInterval(update, updateTime);
+			}
+			</script>
+		</canvas>
+	</body>
+</html>
