@@ -14,11 +14,10 @@
 	<body  onload='init()' oncontextmenu='return false'>
 		<canvas id='canvas-id' width='800' height='600'>
 		<script>
-			const toolbox = {
-				randInt: function(a, b){
-					return Math.floor(Math.random()*(b - a)) + a;
-				},
-				xywh: function(x1, y1, w1, h1){
+			function randInt(a, b){
+				return Math.floor(Math.random()*(b - a)) + a;
+			}
+			function xywh(x1, y1, w1, h1){
 				let a = {
 					x: x1,
 					y: y1,
@@ -26,38 +25,27 @@
 					h: h1
 				};
 				return a;
-				},
-				sleep: function(ms){
- 					const date = Date.now();
-  					let currentDate = null;
-  					do{currentDate = Date.now();}while(currentDate - date < ms);
-				},
-				rec: {
-					x: undefined,
-					y: undefined
-				},
-				recordPosition: function(x, y){
-					toolbox.rec.x = x;
-					toolbox.rec.y = y;
-				},
-				save: function(data, memoryIndex){ //NOTE: memoryIndex IS A STRING!
-					localStorage.setItem(memoryIndex, JSON.stringify(data));
-				},
-				restore: function(memoryIndex){
-					return JSON.parse(localStorage.getItem(memoryIndex));
-				}
-			};
+			}
+			function save(data, memoryIndex){ //NOTE: memoryIndex IS A STRING!
+				localStorage.setItem(memoryIndex, JSON.stringify(data));
+			}
+			function restore(memoryIndex){
+				return JSON.parse(localStorage.getItem(memoryIndex));
+			}
+			function randomOf(array){
+				return array[Math.floor(Math.random()*array.length)];
+			}
 			function areColliding(Ax, Ay, Awidth, Aheight, Bx, By, Bwidth, Bheight){
 				if (Bx <= Ax + Awidth){
 					if (Ax <= Bx + Bwidth){
 						if (By <= Ay + Aheight){
 							if (Ay <= By + Bheight){
-								return 1;
+								return true;
 							}
 						}
 					}
 				}
-				return 0;
+				return false;
 			};
 
 			function randomInteger(upTo){
