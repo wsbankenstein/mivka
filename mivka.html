@@ -47,11 +47,11 @@
 				}
 				return false;
 			};
-			function drawLine(startX, startY, endx, endy){
+			function drawLine(startX, startY, endX, endY){
 				// For better performance bunch calls to lineTo without beginPath() and stroke() inbetween.
 				context.beginPath(); // resets the current path
 				context.moveTo(startX, startY);
-				context.lineTo(endx, endy);
+				context.lineTo(endX, endY);
 				context.stroke();
 			}
 
@@ -195,7 +195,7 @@
 			let key_n = 78;
 			let key_o = 79;
 			let key_p = 80;
-			let key_q = 81
+			let key_q = 81;
 			let key_r = 82;
 			let key_s = 83;
 			let key_t = 84;
@@ -229,7 +229,7 @@
 				// draw grid
 				//context.fillStyle = '#FF0000';
 				context.font = '10px Arial';
-				if (typeof gridSize !=  'undefined' && gridSize >=  25){
+				if(typeof gridSize != 'undefined' && gridSize >= 25){
 					context.fillText(0, 4, 10);
 					context.beginPath();
 					for(i = gridSize; i < canvas.width; i += gridSize){
@@ -303,7 +303,7 @@
 						isKeyPressed[e.keyCode] = false;
 					});
 				}
-				if(typeof draw  ==  'undefined'){
+				if(typeof draw == 'undefined'){
 					redraw = function(){
 						context.clearRect(0, 0, canvas.width, canvas.height);
 						alert('draw() function not defined anywhere (either that or you fucked up big time)');
