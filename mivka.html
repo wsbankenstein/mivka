@@ -8,11 +8,11 @@
 			overflow: hidden;
 		}
 	</style>
-	<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'>
-	<meta charset='UTF-8'></meta> <!-- allows for cyrillic and other exotic text in console.logs -->
+	<meta name = 'viewport' content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'>
+	<meta charset = 'UTF-8'></meta> <!-- allows for cyrillic and other exotic text in console.logs -->
 </head>
-	<body  onload='init()' oncontextmenu='return false'>
-		<canvas id='canvas-id' width='800' height='600'>
+	<body  onload = 'init()' oncontextmenu = 'return false'>
+		<canvas id = 'canvas-id' width = '800' height = '600'>
 		<script>
 			function randInt(a, b){
 				return Math.floor(Math.random()*(b - a)) + a;
@@ -61,31 +61,31 @@
 			}
 
 			function tryToLoad(imageNameWithoutDotPng, backupColor){
-				result={};
-				result.img=new Image();
+				result = {};
+				result.img = new Image();
 				result.img.src = 'images/' + imageNameWithoutDotPng + '.png';
-				result.color=backupColor;
+				result.color = backupColor;
 				return result;
 			}
 
 			function tryToLoadWithFullPath(imageNameAndPath, backupColor){
-				result={};
-				result.img=new Image();
+				result = {};
+				result.img = new Image();
 				result.img.src = imageNameAndPath;
-				result.color=backupColor;
+				result.color = backupColor;
 				return result;
 			}
 
 			function drawImage(imageWithBackupColorObject, x, y, xs, ys){
 				try {
-					if (xs!==undefined){
+					if (xs !== undefined){
 						context.drawImage(imageWithBackupColorObject.img, x, y, xs, ys);
 					} else {
 						context.drawImage(imageWithBackupColorObject.img, x, y);
 					}
 				} catch(e){
 					context.fillStyle = imageWithBackupColorObject.color;
-					if (xs == null){
+					if (xs  ==  null){
 						xs = 100;
 						ys = 100;
 					}
@@ -103,8 +103,7 @@
 			const canvas = document.getElementById('canvas-id');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            let isUpdatePaused_ = false,
-                updateInterval = undefined;
+            let isUpdatePaused_ = false, updateInterval = undefined;
             
             function isUpdatePaused(){
                 return isUpdatePaused_;
@@ -245,7 +244,7 @@
 				// draw grid
 				//context.fillStyle = '#FF0000';
 				context.font = '10px Arial';
-				if (typeof gridSize != 'undefined' && gridSize >= 25){
+				if (typeof gridSize !=  'undefined' && gridSize >=  25){
 					context.fillText(0, 4, 10);
 					context.beginPath();
 					for(i = gridSize; i < canvas.width; i += gridSize){
@@ -319,7 +318,7 @@
 						isKeyPressed[e.keyCode] = false;
 					});
 				}
-				if(typeof draw == 'undefined'){
+				if(typeof draw  ==  'undefined'){
 					redraw = function(){
 						context.clearRect(0, 0, canvas.width, canvas.height);
 						alert('draw() function not defined anywhere (either that or you fucked up big time)');
