@@ -47,11 +47,6 @@
 				}
 				return false;
 			};
-
-			function randomInteger(upTo){
-				return Math.floor(Math.random()*upTo);
-			}
-
 			function drawLine(startX, startY, endx, endy){
 				// For better performance bunch calls to lineTo without beginPath() and stroke() inbetween.
 				context.beginPath(); // resets the current path
@@ -60,19 +55,11 @@
 				context.stroke();
 			}
 
-			function tryToLoad(imageNameWithoutDotPng, backupColor){
+			function tryToLoad(imagePath, backupColour){
 				result = {};
 				result.img = new Image();
-				result.img.src = 'images/' + imageNameWithoutDotPng + '.png';
-				result.color = backupColor;
-				return result;
-			}
-
-			function tryToLoadWithFullPath(imageNameAndPath, backupColor){
-				result = {};
-				result.img = new Image();
-				result.img.src = imageNameAndPath;
-				result.color = backupColor;
+				result.img.src = imagePath;
+				result.color = backupColour;
 				return result;
 			}
 
@@ -138,13 +125,11 @@
                     S2 = getTriangleArea(pX, pY, x2, y2, x3, y3),
                     S3 = getTriangleArea(pX, pY, x3, y3, x1, y1),
                     S = getTriangleArea(x1,y1,x2,y2,x3,y3);
-                console.log(S1 + S2 + S3, S);
                 return Math.abs(S1 + S2 + S3 - S) < 5;
             }
             
             function isInHexagon(cX, cY, vertex, pX, pY){
-                let x = [],
-                    y = [];
+                let x = [], y = [];
                 for(let i = 0; i < 6; i++){
                     x[i] = Math.cos((i/3)*Math.PI)*vertex + cX;
                     y[i] = Math.sin((i/3)*Math.PI)*vertex + cY;
@@ -182,7 +167,7 @@
             }
             </script>
 			<!-- user's file -->
-			<script type = 'application/javascript' src = 'program.js'></script>
+			<script type='application/javascript' src='program.js'></script>
 			<script>
 			const context = canvas.getContext('2d');
 			context.fillStyle = '#272727';
