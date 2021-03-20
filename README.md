@@ -34,7 +34,7 @@
 
 ###  _distance(x1, y1, x2, y2)_ - calculates distance between two points
 
-### _getTriangleArea(x1, y1, x2, y2, x3, y3) - calculates the area of a triangle using Heron's formula
+### _getTriangleArea(x1, y1, x2, y2, x3, y3)_ - calculates the area of a triangle using Heron's formula
 
 ### _isInTriangle(pX, pY, x1, y1, x2, y2, x3, y3)_ - returns *true* if (pX; pY) is within the triangle defined by (x1; y1); (x2; y2); (x3; y3) and *false* otherwise
 
