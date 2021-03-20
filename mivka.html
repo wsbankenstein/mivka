@@ -1,20 +1,20 @@
 <!-- Download the latest verion from: https://github.com/Gaevleflammen/mivka.html/ -->
 <html>
-<head>
-	<style>
-		body, canvas {
-			margin: 0;
-			padding: 0;
-			overflow: hidden;
-		}
-	</style>
-	<meta name = 'viewport' content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'>
-	<meta charset = 'UTF-8'></meta> <!-- allows for cyrillic and other exotic text in console.logs -->
-</head>
-	<body  onload = 'init()' oncontextmenu = 'return false'>
-		<canvas id = 'canvas-id' width = '800' height = '600'>
+	<head>
+		<style>
+			body, canvas {
+				margin: 0;
+				padding: 0;
+				overflow: hidden;
+			}
+		</style>
+		<meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0'>
+		<meta charset='UTF-8'></meta> <!-- allows for cyrillic and other exotic text in console.logs -->
+	</head>
+	<body onload='init()' oncontextmenu='return false'>
+		<canvas id='canvas-id' width='800' height='600'>
 		<script>
-			function randInt(a, b){
+			function randomInt(a, b){
 				return Math.floor(Math.random()*(b - a)) + a;
 			}
 			function xywh(x1, y1, w1, h1){
@@ -250,7 +250,7 @@
 			};
 
 			function init(){
-				if ('ontouchstart' in window || navigator.maxTouchPoints){
+				if('ontouchstart' in window || navigator.maxTouchPoints){
 					isMobile = true;
 					window.addEventListener('touchstart', function(e){
 						let touchobj = e.changedTouches[0];

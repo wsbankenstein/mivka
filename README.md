@@ -2,7 +2,7 @@
 ## This is an HTML canvas drawing utility (and a bit more).
 #### Thank you to all the wonderful (and horrible) people at Telerik Academy for letting me improve on and distribute their code.
 
-### _randInt(min, max)_ - generates a random integer between *min* and *max*
+### _randomInt(min, max)_ - generates a random integer between *min* and *max*
 
 ### _xywh(x, y, w, h)_ - returns an object with the provided X, Y, width, and height
 
