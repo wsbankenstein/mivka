@@ -165,6 +165,19 @@
                 }
                 context.closePath();
             }
+
+			function tracePolygonPath(n, cX, cY, vertex){
+				context.beginPath();
+				for(let i = 0; i < n; i++){
+					let angle = (Math.PI/(n/2)*i);
+					let dx = Math.cos(angle)*vertex;
+					let dy = Math.sin(angle)*vertex;
+					let tX = cX + dx, tY = cY + dy;
+					context.lineTo(tX, tY);
+				}
+				context.closePath();
+			}
+
             </script>
 			<!-- user's file -->
 			<script type='application/javascript' src='program.js'></script>
