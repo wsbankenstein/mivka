@@ -1,5 +1,5 @@
-# mivka.html
-## This is an HTML canvas drawing utility (and a bit more).
+# mivka
+## This is a little "game engine" consisting of an HTML canvas drawing utility and some other stuff.
 #### Thank you to all the wonderful (and horrible) people at Telerik Academy for letting me improve on and distribute their code.
 
 ```js
