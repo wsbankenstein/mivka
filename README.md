@@ -1,6 +1,16 @@
 # mivka
 ## This is a little "game engine" consisting of an HTML canvas drawing utility and some other stuff.
 #### Thank you to all the wonderful (and horrible) people at Telerik Academy for letting me improve on and distribute their code.
+---
+
+```js
+isKeyPressed.get(k)
+```
+- will return `true` if the key is being held, and `false` (or `undefined` which gets casted to `false`) if it isn't.
+- Note: `k` has to be one of the possible values of `KeyboardEvent.key`, for example `q`, `w`, `Enter`, `Shift` etc.
+- Also, the space bar is represented as ` `.
+- Please refer to https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values for details.
+---
 
 ```js
 randomInt(min, max) 
@@ -169,5 +179,15 @@ Just put the following line within the `<html>` tag (and preferably after the `b
 <script defer src='mivka.js'>
 ```
 (Note: the `defer` attribute is pretty much useless [especially with an empty body], but it's good practice.)
+
+Also, if the game is meant to be the only thing on the page, you might want to write some CSS to get rid of the margins:
+```css
+body, canvas {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+```
+You don't have to make a css file for it, you can just put it in a `<style>` tag.
 
 ## Please refer to the comments in the source code for more information.
