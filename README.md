@@ -6,7 +6,7 @@
 ```js
 isKeyPressed.get(k)
 ```
-- will return `true` if the key is being held, and `false` (or `undefined` which gets casted to `false`) if it isn't.
+- will return `true` if the key is being held and `false` (or `undefined` which gets casted to `false`) if it isn't.
 - Note: `k` has to be one of the possible values of `KeyboardEvent.key`, for example `q`, `w`, `Enter`, `Shift` etc.
 - Also, the space bar is represented as ` `.
 - Please refer to https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values for details.
@@ -16,7 +16,7 @@ isKeyPressed.get(k)
 randomInt(min, max) 
 ```
 
-- generates a random integer between *min* and *max*
+- generates a random integer between `min` and `max`
 ---
 
 ```js
@@ -30,14 +30,14 @@ xywh(x, y, w, h)
 save(data, memoryIndex) 
 ```
 
-- save something to localStorage (it doesn't need to be a string, JSON.stringify is incorporated in the function), however *memoryIndex* has to be a string.
+- save something to localStorage (it doesn't need to be a string, JSON.stringify is incorporated in the function), however `memoryIndex` has to be a string.
 ---
 
 ```js
 restore(memoryIndex) 
 ```
 
-- returns the item at *memoryIndex* in localStorage
+- returns the item at `memoryIndex` in localStorage
 ---
 
 ```js
@@ -51,18 +51,19 @@ randomOf(array)
 areColliding(ax, ay, aw, ah, bx, by, bw, bh) 
 ```
 
-- returns *true* if two rectangles are overlapping, and *false* if they are not
+- returns `true` if two rectangles are overlapping, and `false` if they are not
 ---
 
 ```js
 drawLine(x1, y1, x2, y2) 
 ```
 
-- draws a line. Seems quite pointless, actually really useful if you draw a lot of lines.
+- draws a line. 
+- Seems quite pointless, actually really useful if you draw a lot of lines.
 ---
 
 ```js
-tryToLoad(imagePath, backupColour) 
+loadImage(imagePath, backupColour) 
 ```
 
 - creates a JS Image object from an image
@@ -72,7 +73,7 @@ tryToLoad(imagePath, backupColour)
 drawImage(image, x, y, w, h) 
 ```
 
-- improved version of *context.drawImage* (*image* must be a JS Image object)
+- improved version of `context.drawImage` (`image` must be a JS Image object)
 ---
 
 ```js
@@ -93,7 +94,7 @@ setFullscreen()
 updateTime
 ```
 
-- global variable that sets the interval for *function update()*
+- global variable which determines the interval for `function update()`
 ---
 
 ```js
@@ -135,28 +136,28 @@ getTriangleArea(x1, y1, x2, y2, x3, y3)
 isInTriangle(pX, pY, x1, y1, x2, y2, x3, y3) 
 ```
 
-- returns *true* if (pX; pY) is within the triangle defined by (x1; y1); (x2; y2); (x3; y3) and *false* otherwise
+- returns `true` if (pX; pY) is within the triangle defined by (x1; y1); (x2; y2); (x3; y3) and `false` otherwise
 ---
 
 ```js
 isInHexagon(cX, cY, vertex, pX, pY) 
 ```
 
-- returns *true* if (pX; pY) is within the hexagon centred at (cX; cY) with a vertex length of *vertex* and *false* otherwise
+- returns `true` if `(pX; pY)` is within the hexagon centred at `(cX; cY)` with a vertex length of `vertex` and `false` otherwise
 ---
 
 ```js
 isInRectangle(pX, pY, rX, rY, rW, rH) 
 ```
 
-- returns *true* if (pX; pY) is within the rectangle with the top left corner at (rX; rY), the width of *rW*, and the height of *rH*
+- returns `true` if `(pX; pY)` is within the rectangle with the top left corner at `(rX; rY)`, the width of `rW`, and the height of `rH` and `false` otherwise
 ---
 
 ```js
 isInCircle(pX, pY, cX, cY, r) 
 ```
 
-- returns *true* if (pX; pY) is within the circle centred at (cX; cY) with the radius of *r*
+- returns `true` if `(pX; pY)` is within the circle centred at `(cX; cY)` with the radius of `r` and `false` otherwise
 ---
 
 ```js
