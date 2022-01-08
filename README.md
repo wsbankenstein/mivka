@@ -162,4 +162,12 @@ tracePolygonPath(n, cX, cY, vertex)
 
 - traces a path for the n-gon centred at (cX; cY) with a vertex length of *vertex* (for use with context.fill() ot context.stroke())
 
+## So, how do I use this?
+
+Just put the following line within the `<html>` tag (and preferably after the `body` tag) of an html file:
+```
+<script defer src='mivka.js'>
+```
+(Note: the `defer` attribute is pretty much useless [especially with an empty body], but it's good practice.)
+
 ## Please refer to the comments in the source code for more information.
