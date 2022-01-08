@@ -1,5 +1,5 @@
 body, canvas {
-    margin: none;
-    padding: none;
-    overflow: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
