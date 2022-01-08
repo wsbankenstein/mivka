@@ -162,4 +162,4 @@ tracePolygonPath(n, cX, cY, vertex)
 
 - traces a path for the n-gon centred at (cX; cY) with a vertex length of *vertex* (for use with context.fill() ot context.stroke())
 
-### The whole isKeyPressed thing uses deprecated stuff, you could just use the *key* attribute of the keyup and keydown event listeners
+## Please refer to the comments in the source code for more information.

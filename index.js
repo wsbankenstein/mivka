@@ -1,8 +1,0 @@
-
-function update() {
-
-}
-
-function draw() {
-
-}
