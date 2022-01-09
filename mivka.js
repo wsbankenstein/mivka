@@ -138,32 +138,64 @@ function init() {
 
 body.onload = init;
 
-function randomInt(a, b) {
-	return Math.floor(Math.random() * (b - a)) + a;
+/**
+ * @param  {number} min
+ * @param  {number} max
+ */
+function randomInt(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function xywh(x1, y1, w1, h1) {
+/**
+ * @param  {number} x
+ * @param  {number} y
+ * @param  {number} w
+ * @param  {number} h
+ */
+function xywh(x, y, w, h) {
 	let a = {
-		x: x1,
-		y: y1,
-		w: w1,
-		h: h1
+		x: x,
+		y: y,
+		w: w,
+		h: h
 	};
 	return a;
 }
 
-function save(data, memoryIndex) { //NOTE: memoryIndex IS A STRING!
+/**
+ * @param  {} data
+ * @param  {string} memoryIndex
+ * Saves data to localStorage - see {@link restore}
+ */
+function save(data, memoryIndex) {
 	localStorage.setItem(memoryIndex, JSON.stringify(data));
 }
 
+/**
+ * @param  {string} memoryIndex
+ * gets data from localStorage - see {@link save}
+ */
 function restore(memoryIndex) {
 	return JSON.parse(localStorage.getItem(memoryIndex));
 }
 
+/**
+ * @param  {array} array
+ */
 function randomOf(array) {
 	return array[Math.floor(Math.random() * array.length)];
 }
 
+/**
+ * @param  {number} Ax
+ * @param  {number} Ay
+ * @param  {number} Awidth
+ * @param  {number} Aheight
+ * @param  {number} Bx
+ * @param  {number} By
+ * @param  {number} Bwidth
+ * @param  {number} Bheight
+ */
 function areColliding(Ax, Ay, Awidth, Aheight, Bx, By, Bwidth, Bheight) {
 	if (Bx <= Ax + Awidth) {
 		if (Ax <= Bx + Bwidth) {
@@ -177,6 +209,12 @@ function areColliding(Ax, Ay, Awidth, Aheight, Bx, By, Bwidth, Bheight) {
 	return false;
 };
 
+/**
+ * @param  {number} startX
+ * @param  {number} startY
+ * @param  {number} endX
+ * @param  {number} endY
+ */
 function drawLine(startX, startY, endX, endY) {
 	// For better performance bunch calls to lineTo without beginPath() and stroke() inbetween.
 	context.beginPath(); // resets the current path
@@ -185,6 +223,10 @@ function drawLine(startX, startY, endX, endY) {
 	context.stroke();
 }
 
+/**
+ * @param  {string} imagePath - path to image
+ * @param  {string} backupColour
+ */
 function loadImage(imagePath, backupColour) {
 	result = {};
 	result.img = new Image();
@@ -193,6 +235,15 @@ function loadImage(imagePath, backupColour) {
 	return result;
 }
 
+/**
+ * @param  {object} imageWithBackupColourObject
+ * @param  {Image} imageWithBackupColourObject.img
+ * @param  {string} imageWithBackupColourObject.color
+ * @param  {number} x
+ * @param  {number} y
+ * @param  {number} xs
+ * @param  {number} ys
+ */
 function drawImage(imageWithBackupColourObject, x, y, xs, ys) {
 	try {
 		if (xs !== undefined) {
@@ -210,6 +261,10 @@ function drawImage(imageWithBackupColourObject, x, y, xs, ys) {
 	}
 }
 
+/**
+ * @param  {number} w
+ * @param  {number} h
+ */
 function setCanvasSize(w, h) {
 	canvas.width = w;
 	canvas.height = h;
@@ -239,11 +294,25 @@ function startUpdate() {
 
 // POLYGON FUNCTIONS
 
-// Distance between two points
+/**
+ * Distance between two points
+ * @param  {number} x1
+ * @param  {number} y1
+ * @param  {number} x2
+ * @param  {number} y2
+ */
 function distance(x1, y1, x2, y2) {
 	return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 }
 
+/**
+ * @param  {number} x1
+ * @param  {number} y1
+ * @param  {number} x2
+ * @param  {number} y2
+ * @param  {number} x3
+ * @param  {number} y3
+ */
 function getTriangleArea(x1, y1, x2, y2, x3, y3) {
 	let a = distance(x1, y1, x2, y2),
 		b = distance(x2, y2, x3, y3),
@@ -252,6 +321,16 @@ function getTriangleArea(x1, y1, x2, y2, x3, y3) {
 	return Math.sqrt(p * (p - a) * (p - b) * (p - c));
 }
 
+/**
+ * @param  {number} pX
+ * @param  {number} pY
+ * @param  {number} x1
+ * @param  {number} y1
+ * @param  {number} x2
+ * @param  {number} y2
+ * @param  {number} x3
+ * @param  {number} y3
+ */
 function isInTriangle(pX, pY, x1, y1, x2, y2, x3, y3) {
 	let S1 = getTriangleArea(pX, pY, x1, y1, x2, y2),
 		S2 = getTriangleArea(pX, pY, x2, y2, x3, y3),
@@ -260,6 +339,13 @@ function isInTriangle(pX, pY, x1, y1, x2, y2, x3, y3) {
 	return Math.abs(S1 + S2 + S3 - S) < 5;
 }
 
+/**
+ * @param  {number} cX
+ * @param  {number} cY
+ * @param  {number} vertex
+ * @param  {number} pX
+ * @param  {number} pY
+ */
 function isInHexagon(cX, cY, vertex, pX, pY) {
 	let x = [], y = [];
 	for (let i = 0; i < 6; i++) {
@@ -274,18 +360,40 @@ function isInHexagon(cX, cY, vertex, pX, pY) {
 	return isInside;
 }
 
+/**
+ * @param  {number} pX
+ * @param  {number} pY
+ * @param  {number} rX
+ * @param  {number} rY
+ * @param  {number} rW
+ * @param  {number} rH
+ */
 function isInRectangle(pX, pY, rX, rY, rW, rH) {
 	if (pX >= rX && pX <= rX + rW && pY >= rY && pY <= rY + rH) return true;
 	else return false;
 }
 
+/**
+ * @param  {number} pX - X coordinate of point
+ * @param  {number} pY - Y coordinate of point
+ * @param  {number} cX - X coordinate of centre
+ * @param  {number} cY - Y coordinate of centre
+ * @param  {number} r - radius of circle
+ */
 function isInCircle(pX, pY, cX, cY, r) {
 	if ((pX - cX) * (pX - cX) + (pY - cY) * (pY - cY) <= r * r) return true;
 	else return false;
 }
 
-// Creates a path for a hexagon
-// Use with context.fill() ot context.stroke()
+
+/**
+ * 
+ * Creates a path for a hexagon.
+ * Use with context.fill() ot context.stroke()
+ * @param  {number} cX
+ * @param  {number} cY
+ * @param  {number} vertex
+ */
 function traceHexagonPath(cX, cY, vertex) {
 	context.beginPath();
 	for (let i = 0; i < 6; i++) {
@@ -298,6 +406,15 @@ function traceHexagonPath(cX, cY, vertex) {
 	context.closePath();
 }
 
+/**
+ * 
+ * Creates a path for an n-gon.
+ * Use with context.fill() ot context.stroke()
+ * @param  {number} n
+ * @param  {number} cX
+ * @param  {number} cY
+ * @param  {number} vertex
+ */
 function tracePolygonPath(n, cX, cY, vertex) {
 	context.beginPath();
 	for (let i = 0; i < n; i++) {
