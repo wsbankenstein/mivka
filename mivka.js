@@ -27,6 +27,9 @@ const context = canvas.getContext('2d');
 context.fillStyle = '#272727';
 
 let isKeyPressed = new Map();
+// This no longer uses the deprecated KeyboardEvent.keyCode
+// It now uses KeyboardEvent.key (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key)
+// Full list at https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
 // undefined gets casted to a boolean false, so accessing this before a key is pressed should be fine
 // Note that values are accessed with isKeyPressed.get(key)
 // Also, you can't store this in localStorage, because it's a Map
