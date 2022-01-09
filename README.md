@@ -174,7 +174,7 @@ tracePolygonPath(n, cX, cY, vertex)
 - traces a path for the n-gon centred at (cX; cY) with a vertex length of *vertex* (for use with context.fill() ot context.stroke())
 
 ## So, how do I use this?
-### If the game is meant to be the only thing on the page:
+### In case the game is meant to be the only thing on the page:
 1. You might want to write some CSS to get rid of the margins:
 ```css
 body, canvas {
