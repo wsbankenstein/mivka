@@ -174,14 +174,8 @@ tracePolygonPath(n, cX, cY, vertex)
 - traces a path for the n-gon centred at (cX; cY) with a vertex length of *vertex* (for use with context.fill() ot context.stroke())
 
 ## So, how do I use this?
-
-Just put the following line within the `<html>` tag (and preferably after the `body` tag) of an html file:
-```
-<script defer src='mivka.js'>
-```
-(Note: the `defer` attribute is pretty much useless [especially with an empty body], but it's good practice.)
-
-Also, if the game is meant to be the only thing on the page, you might want to write some CSS to get rid of the margins:
+### In case the game is meant to be the only thing on the page:
+1. You might want to write some CSS to get rid of the margins:
 ```css
 body, canvas {
 	margin: 0;
@@ -190,5 +184,16 @@ body, canvas {
 }
 ```
 You don't have to make a css file for it, you can just put it in a `<style>` tag.
+
+2. Add the following line within the `<html>` tag (and preferably after the `body` tag) of an html file:
+```
+<script defer src='mivka.js'>
+```
+(Note: the `defer` attribute is pretty much useless [especially with an empty body], but it's good practice.)
+ 
+### In any other case:
+1. `<canvas id='mivka-canvas'></canvas>`;
+2. `<script defer src='mivka.js'>`;
+3. In your JS file for the game: `setCanvasSize(w, h)` (canvas size is set to (`window.innerWidth`, `window.innerHeight`) by default).
 
 ## Please refer to the comments in the source code for more information.
