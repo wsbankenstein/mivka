@@ -12,9 +12,14 @@ function mousemove/mouseup/mousedown/keyup/keydown(e) {...} (added to event list
 
 let body = document.getElementsByTagName('body')[0];
 body.oncontextmenu = function () { return false; }; // disable right-click context menu
-let canvas = document.createElement('canvas');
-canvas.id = 'mivka-canvas';
-body.appendChild(canvas);
+
+// Create canvas if it doesn't exist
+if (!document.getElementById('mivka-canvas')) {
+	let canvas = document.createElement('canvas');
+	canvas.id = 'mivka-canvas';
+	body.appendChild(canvas);
+} else let canvas = document.getElementById('mivka-canvas');
+
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
