@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="mivka-canvas"></canvas>
+</body>
+<script defer type="module">
+    import Mivka from './Mivka.js';
+    let mivka = new Mivka(document.getElementById('mivka-canvas'));
+    mivka.update = function() {
+        console.log('bachka');
+    }
+
+    mivka.update();
+
+    mivka.draw = function() {
+        let ctx = mivka.context;
+        let canvas = mivka.canvas;
+        ctx.fillStyle = '#272727';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    mivka.mousedown = function(e) {
+        console.log(e);
+    }
+
+    mivka.keydown = function(e) {
+        console.log(e);
+    }
+
+    mivka.init();
+</script>
+</html>
