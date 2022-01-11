@@ -106,6 +106,12 @@ randomOf(array)
 ---
 
 ```js
+randomColour()
+```
+
+- returns a random hexadecimal colour, e.g. '#012def'
+---
+```js
 areColliding(ax, ay, aw, ah, bx, by, bw, bh) 
 ```
 
