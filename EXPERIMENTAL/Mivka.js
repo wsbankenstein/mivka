@@ -1,6 +1,7 @@
 class Mivka {
 	constructor(canvas) {
 		this.canvas = canvas;
+		this.fullscreen = false;
 		this.canvas.width = window.innerWidth;
 		this.canvas.height = window.innerHeight;
 		this.context = canvas.getContext('2d');
@@ -70,6 +71,7 @@ class Mivka {
 				this.mouseX = parseInt(touchobj.pageX - canvas.offsetLeft);
 				this.mouseY = parseInt(touchobj.pageY - canvas.offsetTop);
 			});
+
 		}
 	
 		window.addEventListener('mousemove', function (e) {
@@ -84,6 +86,13 @@ class Mivka {
 		if (typeof this.mousedown != 'undefined') window.addEventListener('mousedown', this.mousedown);
 	
 		const that = this;
+
+		window.addEventListener('resize' , function () {
+			if (that.fullscreen) {
+				that.canvas.width = window.innerWidth;
+				that.canvas.height = window.innerHeight;
+			}
+		});
 
 		if (typeof this.keydown != 'undefined') {
 			window.addEventListener('keydown', function (e) {
@@ -139,6 +148,22 @@ class Mivka {
 		updateInterval = setInterval(update, updateTime);
 		isUpdatePaused_ = false;
 		redraw();
+	}
+
+	/**
+	 * @param  {number} w
+	 * @param  {number} h
+	 */
+	setCanvasSize(w, h) {
+		this.canvas.width = w;
+		this.canvas.height = h;
+		this.fullscreen = false;
+	}
+
+	setFullscreen() {
+		this.canvas.width = window.innerWidth;
+		this.canvas.height = window.innerHeight;
+		this.fullscreen = true;
 	}
 }
 
@@ -364,19 +389,6 @@ class CanvasUtil {
 			}
 			context.fillRect(x, y, xs, ys);
 		}
-	}
-
-	/**
-	 * @param  {number} w
-	 * @param  {number} h
-	 */
-	setCanvasSize(canvas, w, h) {
-		canvas.width = w;
-		canvas.height = h;
-	}
-
-	setFullscreen(canvas) {
-		setCanvasSize(canvas, window.innerWidth, window.innerHeight);
 	}
 
 	/**
