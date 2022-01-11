@@ -21,7 +21,7 @@ if (!document.getElementById('mivka-canvas')) {
 
 	// Automatically generate CSS to make canvas fullscreen
 	let style = document.createElement('style');
-	style.innerHTML = 'body { margin: 0; padding: 0; , overflow: hidden}';
+	style.innerHTML = 'body { margin: 0; padding: 0; overflow: hidden}';
 	document.getElementsByTagName('head')[0].appendChild(style);
 
 } else let canvas = document.getElementById('mivka-canvas');

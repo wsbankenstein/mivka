@@ -16,6 +16,7 @@
     let cUtil = new CanvasUtil(mivka.canvas);
 
     mivka.fullscreen = true;
+    mivka.generateFullscreenCSS();
 
     mivka.update = function() {
         console.log(util.randomInt(0, 69));
@@ -27,7 +28,7 @@
         ctx.fillStyle = '#272727';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
-        cUtil.tracePolygonPath(ctx, 6, canvas.width / 2, canvas.height /2, 100);
+        cUtil.tracePolygonPath(6, canvas.width / 2, canvas.height /2, 100);
         ctx.fillStyle = '#FAE100';
         ctx.fill();
     }

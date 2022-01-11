@@ -165,6 +165,13 @@ class Mivka {
 		this.canvas.height = window.innerHeight;
 		this.fullscreen = true;
 	}
+
+	generateFullscreenCSS() {
+		let mivkaStyle = document.createElement('style');
+		mivkaStyle.id = 'mivka-style';
+		mivkaStyle.innerHTML = 'body { margin: 0; padding: 0; overflow: hidden}';
+		document.getElementsByTagName('head')[0].appendChild(mivkaStyle);
+	}
 }
 
 class Util {
@@ -359,10 +366,10 @@ class CanvasUtil {
 	 */
 	drawLine(startX, startY, endX, endY) {
 		// For better performance bunch calls to lineTo without beginPath() and stroke() inbetween.
-		context.beginPath(); // resets the current path
-		context.moveTo(startX, startY);
-		context.lineTo(endX, endY);
-		context.stroke();
+		this.context.beginPath(); // resets the current path
+		this.context.moveTo(startX, startY);
+		this.context.lineTo(endX, endY);
+		this.context.stroke();
 	}
 
 	/**
@@ -377,17 +384,17 @@ class CanvasUtil {
 	drawImage(imageWithBackupColourObject, x, y, xs, ys) {
 		try {
 			if (xs !== undefined) {
-				context.drawImage(imageWithBackupColourObject.img, x, y, xs, ys);
+				this.context.drawImage(imageWithBackupColourObject.img, x, y, xs, ys);
 			} else {
-				context.drawImage(imageWithBackupColourObject.img, x, y);
+				this.context.drawImage(imageWithBackupColourObject.img, x, y);
 			}
 		} catch (e) {
-			context.fillStyle = imageWithBackupColourObject.color || '#FF0000';
+			this.context.fillStyle = imageWithBackupColourObject.color || '#FF0000';
 			if (xs == null) {
 				xs = 100;
 				ys = 100;
 			}
-			context.fillRect(x, y, xs, ys);
+			this.context.fillRect(x, y, xs, ys);
 		}
 	}
 
@@ -399,16 +406,16 @@ class CanvasUtil {
 	 * @param  {number} cY
 	 * @param  {number} vertex
 	 */
-	traceHexagonPath(context, cX, cY, vertex) {
-		context.beginPath();
+	traceHexagonPath(cX, cY, vertex) {
+		this.context.beginPath();
 		for (let i = 0; i < 6; i++) {
 			let angle = (Math.PI / 3) * i;
 			let dx = Math.cos(angle) * vertex;
 			let dy = Math.sin(angle) * vertex;
 			let tX = cX + dx, tY = cY + dy;
-			context.lineTo(tX, tY);
+			this.context.lineTo(tX, tY);
 		}
-		context.closePath();
+		this.context.closePath();
 	}
 
 	/**
@@ -420,16 +427,16 @@ class CanvasUtil {
 	 * @param  {number} cY
 	 * @param  {number} vertex
 	 */
-	tracePolygonPath(context, n, cX, cY, vertex) {
-		context.beginPath();
+	tracePolygonPath(n, cX, cY, vertex) {
+		this.context.beginPath();
 		for (let i = 0; i < n; i++) {
 			let angle = (Math.PI / (n / 2) * i);
 			let dx = Math.cos(angle) * vertex;
 			let dy = Math.sin(angle) * vertex;
 			let tX = cX + dx, tY = cY + dy;
-			context.lineTo(tX, tY);
+			this.context.lineTo(tX, tY);
 		}
-		context.closePath();
+		this.context.closePath();
 	}
 
 }
