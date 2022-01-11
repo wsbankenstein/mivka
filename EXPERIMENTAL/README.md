@@ -215,6 +215,7 @@ mivka.update = function() {
 mivka.draw = function() {
 	const canvas = mivka.canvas; // these only exist
 	const ctx = mivka.context;   // to save typing
+	// ...
 }
 
 mivka.init(); // Don't forget this!
