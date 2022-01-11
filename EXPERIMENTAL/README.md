@@ -53,6 +53,7 @@ setFullscreen()
 ```
 
 - see `fullscreen` below
+---
 
 ```js
 fullscreen
