@@ -10,19 +10,23 @@
     <canvas id="mivka-canvas"></canvas>
 </body>
 <script defer type="module">
-    import Mivka from './Mivka.js';
+    import { Mivka, Util, CanvasUtil } from './Mivka.js';
     let mivka = new Mivka(document.getElementById('mivka-canvas'));
+    let util = new Util();
+    let cUtil = new CanvasUtil(mivka.canvas);
     mivka.update = function() {
-        console.log('bachka');
+        console.log(util.randomInt(0, 69));
     }
-
-    mivka.update();
 
     mivka.draw = function() {
         let ctx = mivka.context;
         let canvas = mivka.canvas;
         ctx.fillStyle = '#272727';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        cUtil.tracePolygonPath(ctx, 6, canvas.width / 2, canvas.height /2, 100);
+        ctx.fillStyle = '#FAE100';
+        ctx.fill();
     }
 
     mivka.mousedown = function(e) {
