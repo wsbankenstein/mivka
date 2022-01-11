@@ -143,7 +143,7 @@ getTriangleArea(x1, y1, x2, y2, x3, y3)
 isInTriangle(pX, pY, x1, y1, x2, y2, x3, y3) 
 ```
 
-- returns `true` if (pX; pY) is within the triangle defined by (x1; y1); (x2; y2); (x3; y3) and `false` otherwise
+- returns `true` if `(pX; pY)` is within the triangle defined by `(x1; y1); (x2; y2); (x3; y3)` and `false` otherwise
 ---
 
 ```js
