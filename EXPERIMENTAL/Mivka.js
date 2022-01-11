@@ -9,7 +9,6 @@ class Mivka {
 
 		this.updateTime = 10; // in ms
 		this.isUpdatePaused_ = false;
-		this.updateInterval = undefined;
 	}
 
 	redraw() { // should only be called by init()
@@ -140,12 +139,10 @@ class Mivka {
 	}
 
 	pauseUpdate() {
-		clearInterval(updateInterval);
 		isUpdatePaused_ = true;
 	}
 
 	startUpdate() {
-		updateInterval = setInterval(update, updateTime);
 		isUpdatePaused_ = false;
 		redraw();
 	}

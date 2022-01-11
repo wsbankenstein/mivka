@@ -13,9 +13,9 @@
 </body>
 <script defer type="module">
     import { Mivka, Util, CanvasUtil } from './Mivka.js';
-    let mivka1 = new Mivka(document.getElementById('mivka-canvas-1')), mivka2 = new Mivka(document.getElementById('mivka-canvas-2')), mivka3 = new Mivka(document.getElementById('mivka-canvas-3'));
+    let mivka1 = new Mivka(document.getElementById('mivka-canvas-1')), mivka2 = new Mivka(document.getElementById('mivka-canvas-2'));
     let util = new Util();
-    let cUtil1 = new CanvasUtil(mivka1.canvas), cUtil2 = new CanvasUtil(mivka2.canvas), cUtil3 = new CanvasUtil(mivka3.canvas);
+    let cUtil1 = new CanvasUtil(mivka1.canvas), cUtil2 = new CanvasUtil(mivka2.canvas);
 
     mivka1.canvas.width = 300;
     mivka1.canvas.height = 300;
@@ -23,8 +23,7 @@
     mivka2.canvas.width = 300;
     mivka2.canvas.height = 300;
 
-    mivka3.canvas.width = 300;
-    mivka3.canvas.height = 300;
+    console.dir(cUtil1);
 
     mivka1.update = function() {
         // console.log(util.randomInt(0, 69));
@@ -36,7 +35,7 @@
         ctx.fillStyle = '#272727';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.beginPath();
-        cUtil1.tracePolygonPath(ctx, 6, canvas.width / 2, canvas.height /2, 100);
+        cUtil1.tracePolygonPath(6, canvas.width / 2, canvas.height /2, 100);
         ctx.fillStyle = '#FAE100';
         ctx.fill();
     }
@@ -47,19 +46,20 @@
         ctx.fillStyle = '#32DBF0';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = '#FF0181';
+        ctx.beginPath();
         cUtil2.tracePolygonPath(8, canvas.width / 2, canvas.height / 2, 100);
+        ctx.stroke();
     }
-
-    mivka2.draw();
 
     mivka1.mousedown = function(e) {
         console.log(e);
     }
 
-    mivka1.keydown = function(e) {
+    mivka2.keydown = function(e) {
         console.log(e);
     }
 
     mivka1.init();
+    mivka2.init();
 </script>
 </html>
