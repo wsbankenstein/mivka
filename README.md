@@ -2,15 +2,73 @@
 ## This is a little "game engine" consisting of an HTML canvas drawing utility and some other stuff.
 #### Thank you to all the wonderful (and horrible) people at Telerik Academy for letting me improve on and distribute their code.
 ---
+## methods and properties of Mivka:
 
 ```js
-isKeyPressed.get(k)
+isKeyPressed(k)
 ```
 - will return `true` if the key is being held and `false` (or `undefined` which gets casted to `false`) if it isn't.
 - Note: `k` has to be one of the possible values of `KeyboardEvent.key`, for example `q`, `w`, `Enter`, `Shift` etc.
 - Also, the space bar is represented as ` `.
 - Please refer to https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values for details.
+- see `keyStates` below
 ---
+
+```js
+keyStates
+```
+- don't touch this. (Unless you want to pretend the user is holding down a key until they actually press it.)
+---
+
+```js
+isUpdatePaused() 
+```
+
+- does not need documentation
+---
+
+```js
+pauseUpdate() 
+```
+
+- does not need documentation
+---
+
+```js
+startUpdate() 
+```
+
+- does not need documentation
+---
+
+```js
+setCanvasSize(w, h) 
+```
+
+- does not need documentation
+---
+
+```js
+setFullscreen() 
+```
+
+- see `fullscreen` below
+---
+
+```js
+fullscreen
+```
+
+- In addition to making the canvas take up the whole window, this property adds a resize handler which automatically adjusts the canvas size whenever the window is resized.
+---
+
+```js
+generateFullscreenCSS()
+```
+- generates CSS which removes body padding, margins, and overflow. Useful (read: mandatory) if the canvas is fullscreen.
+---
+
+## methods and properties of Util:
 
 ```js
 randomInt(min, max) 
@@ -48,6 +106,12 @@ randomOf(array)
 ---
 
 ```js
+randomColour()
+```
+
+- returns a random hexadecimal colour, e.g. '#012def'
+---
+```js
 areColliding(ax, ay, aw, ah, bx, by, bw, bh) 
 ```
 
@@ -55,67 +119,10 @@ areColliding(ax, ay, aw, ah, bx, by, bw, bh)
 ---
 
 ```js
-drawLine(x1, y1, x2, y2) 
-```
-
-- draws a line. 
-- Seems quite pointless, actually really useful if you draw a lot of lines.
----
-
-```js
 loadImage(imagePath, backupColour) 
 ```
 
 - creates a JS Image object from an image
----
-
-```js
-drawImage(image, x, y, w, h) 
-```
-
-- improved version of `context.drawImage` (`image` must be a JS Image object)
----
-
-```js
-setCanvasSize(w, h) 
-```
-
-- does not need documentation
----
-
-```js
-setFullscreen() 
-```
-
-- does not need documentation
----
-
-```js
-updateTime
-```
-
-- global variable which determines the interval for `function update()`
----
-
-```js
-isUpdatePaused() 
-```
-
-- does not need documentation
----
-
-```js
-pauseUpdate() 
-```
-
-- does not need documentation
----
-
-```js
-startUpdate() 
-```
-
-- does not need documentation
 ---
 
 ```js
@@ -160,6 +167,24 @@ isInCircle(pX, pY, cX, cY, r)
 - returns `true` if `(pX; pY)` is within the circle centred at `(cX; cY)` with the radius of `r` and `false` otherwise
 ---
 
+## methods and properties of CanvasUtil:
+
+```js
+drawLine(x1, y1, x2, y2) 
+```
+
+- draws a line. 
+- Seems quite pointless, actually really useful if you draw a lot of lines.
+---
+
+```js
+drawImage(image, x, y, w, h) 
+```
+
+- improved version of `context.drawImage` (`image` must be a JS Image object)
+---
+
+
 ```js
 traceHexagonPath(cX, cY, vertex) 
 ```
@@ -174,26 +199,33 @@ tracePolygonPath(n, cX, cY, vertex)
 - traces a path for the n-gon centred at (cX; cY) with a vertex length of *vertex* (for use with context.fill() ot context.stroke())
 
 ## So, how do I use this?
-### In case the game is meant to be the only thing on the page:
-1. You might want to write some CSS to get rid of the margins:
-```css
-body, canvas {
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-}
+```html
+<script src="./Mivka.js" type="module"></script>
+<script src="./yourfile.js" type="module"></script>
 ```
-You don't have to make a css file for it, you can just put it in a `<style>` tag.
 
-2. Add the following line within the `<html>` tag (and preferably after the `body` tag) of an html file:
+Note that your file must also be assigned type="module" for the import statement to work.
+
+```js
+import { Mivka, Util, CanvasUtil } from './Mivka.js';
+const mivka = new Mivka(document.getElementById('canvas-id'));
+const util = new Util(); // You can also use Util as an abstract class with Util.prototype, but that takes significantly more typing.
+const cUtil = new CanvasUtil(mivka.canvas);
+
+// Variable declaration
+
+mivka.update = function() {
+	// ...
+}
+
+mivka.draw = function() {
+	const canvas = mivka.canvas; // these only exist
+	const ctx = mivka.context;   // to save typing
+	// ...
+}
+
+mivka.init(); // Don't forget this!
+
 ```
-<script defer src='mivka.js'>
-```
-(Note: the `defer` attribute is pretty much useless [especially with an empty body], but it's good practice.)
- 
-### In any other case:
-1. `<canvas id='mivka-canvas'></canvas>`;
-2. `<script defer src='mivka.js'>`;
-3. In your JS file for the game: `setCanvasSize(w, h)` (canvas size is set to (`window.innerWidth`, `window.innerHeight`) by default).
 
 ## Please refer to the comments in the source code for more information.

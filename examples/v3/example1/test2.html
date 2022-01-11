@@ -26,7 +26,7 @@
     console.dir(cUtil1);
 
     mivka1.update = function() {
-        // console.log(util.randomInt(0, 69));
+        console.log(util.randomInt(0, 69));
     }
 
     mivka1.draw = function() {
@@ -40,14 +40,24 @@
         ctx.fill();
     }
 
+    let player = {x: 0, y: 0}
+
+    mivka2.update = function() {
+        if (mivka2.isKeyPressed('w')) player.y--;
+        if (mivka2.isKeyPressed('a')) player.x--;
+        if (mivka2.isKeyPressed('s')) player.y++;
+        if (mivka2.isKeyPressed('d')) player.x++;
+    }
+
     mivka2.draw = function () {
         let ctx = mivka2.context;
         let canvas = mivka2.canvas;
         ctx.fillStyle = '#32DBF0';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.strokeStyle = '#FF0181';
+        ctx.lineWidth = 10;
         ctx.beginPath();
-        cUtil2.tracePolygonPath(8, canvas.width / 2, canvas.height / 2, 100);
+        ctx.arc(player.x, player.y, 30, 0, 2*Math.PI);
         ctx.stroke();
     }
 
