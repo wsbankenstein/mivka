@@ -205,7 +205,7 @@ tracePolygonPath(n, cX, cY, vertex)
 ```
 
 Note that your file must also be assigned type="module" for the import statement to work.
-(You can also do this straight in the html file with `<script type="module"> //... </script>`, but, like, *don't.*)
+(You can also do this straight in the html file with `<script type="module"> // ... </script>`, but, like, *don't.*)
 
 ```js
 import { Mivka, Util, CanvasUtil } from './Mivka.js';
