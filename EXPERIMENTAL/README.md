@@ -5,6 +5,18 @@
 ## methods and properties of Mivka:
 
 ```js
+canvas
+```
+- the HTMLCanvasElement the object is attached to and operating on.
+---
+
+```js
+context
+```
+- the CanvasRenderingContext2D of `canvas`.
+---
+
+```js
 isKeyPressed(k)
 ```
 - will return `true` if the key is being held and `false` (or `undefined` which gets casted to `false`) if it isn't.
@@ -24,6 +36,12 @@ keyStates
 isUpdatePaused() 
 ```
 
+- returns `isUpdatePaused_` (see `isUpdatePaused_` below)
+---
+
+```js
+isUpdatePaused_
+```
 - does not need documentation
 ---
 
@@ -189,14 +207,15 @@ drawImage(image, x, y, w, h)
 traceHexagonPath(cX, cY, vertex) 
 ```
 
-- traces a path for the hexagon centred at (cX; cY) with a vertex length of *vertex* (for use with context.fill() or context.stroke())
+- traces a path for the hexagon centred at `(cX; cY)` with a vertex length of `vertex` (for use with `context.fill()` or `context.stroke()`)
+- see `tracePolygonPath()` below
 ---
 
 ```js
 tracePolygonPath(n, cX, cY, vertex) 
 ```
 
-- traces a path for the n-gon centred at (cX; cY) with a vertex length of *vertex* (for use with context.fill() ot context.stroke())
+- traces a path for the n-gon centred at`(cX; cY)` with a vertex length of `vertex` (for use with `context.fill()` or `context.stroke()`)
 
 ## So, how do I use this?
 ```html
@@ -205,6 +224,7 @@ tracePolygonPath(n, cX, cY, vertex)
 ```
 
 Note that your file must also be assigned type="module" for the import statement to work.
+(You can also do this in the html file with `<script type="module"> // ... </script>`, but, like, *don't.*)
 
 ```js
 import { Mivka, Util, CanvasUtil } from './Mivka.js';
