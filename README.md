@@ -189,14 +189,14 @@ drawImage(image, x, y, w, h)
 traceHexagonPath(cX, cY, vertex) 
 ```
 
-- traces a path for the hexagon centred at (cX; cY) with a vertex length of *vertex* (for use with context.fill() or context.stroke())
+- traces a path for the hexagon centred at `(cX; cY)` with a vertex length of `vertex` (for use with `context.fill()` or `context.stroke()`)
 ---
 
 ```js
 tracePolygonPath(n, cX, cY, vertex) 
 ```
 
-- traces a path for the n-gon centred at (cX; cY) with a vertex length of *vertex* (for use with context.fill() ot context.stroke())
+- traces a path for the n-gon centred at `(cX; cY)` with a vertex length of `vertex` (for use with `context.fill()` ot `context.stroke()`)
 
 ## So, how do I use this?
 ```html
@@ -205,6 +205,7 @@ tracePolygonPath(n, cX, cY, vertex)
 ```
 
 Note that your file must also be assigned type="module" for the import statement to work.
+(You can also do this straight in the html file with `<script type="module"> //... </script>`, but, like, *don't.*)
 
 ```js
 import { Mivka, Util, CanvasUtil } from './Mivka.js';
