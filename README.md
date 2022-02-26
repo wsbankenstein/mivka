@@ -59,7 +59,7 @@ setFullscreen()
 fullscreen
 ```
 
-- In addition to making the canvas take up the whole window, this property adds a resize handler which automatically adjusts the canvas size whenever the window is resized.
+- in addition to making the canvas take up the whole window, this property adds a resize handler which automatically adjusts the canvas size whenever the window is resized.
 ---
 
 ```js
@@ -72,7 +72,7 @@ generateFullscreenCSS()
 importFont(fontName)
 ```
 
-- Imports a font from the Google Fonts API by appending a `link` element to the `head` tag.
+- imports a font from the Google Fonts API by appending a `link` element to the `head` tag.
 ---
 
 ## methods and properties of Util:
@@ -181,7 +181,7 @@ drawLine(x1, y1, x2, y2)
 ```
 
 - draws a line. 
-- Seems quite pointless, actually really useful if you draw a lot of lines.
+- seems quite pointless, actually really useful if you draw a lot of lines.
 ---
 
 ```js
