@@ -68,6 +68,13 @@ generateFullscreenCSS()
 - generates CSS which removes body padding, margins, and overflow. Useful (read: mandatory) if the canvas is fullscreen.
 ---
 
+```js
+importFont(fontName)
+```
+
+- Imports a font from the Google Fonts API by appending a `link` element to the `head` tag.
+---
+
 ## methods and properties of Util:
 
 ```js

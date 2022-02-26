@@ -169,6 +169,17 @@ class Mivka {
 		mivkaStyle.innerHTML = 'body { margin: 0; padding: 0; overflow: hidden}';
 		document.getElementsByTagName('head')[0].appendChild(mivkaStyle);
 	}
+
+	/**
+	 * Uses the Google Fonts API. https://fonts.google.com/
+	 * @param  {String} fontName - The name of the font
+	 */
+	importFont(fontName) {
+		let fontImportLinkElement = document.createElement('link');
+		fontImportLinkElement.rel = 'stylesheet';
+		fontImportLinkElement.href = `https://fonts.googleapis.com/css?family=${fontName.trim().split(' ').join('+')}`;
+		document.getElementsByTagName('head')[0].appendChild(fontImportLinkElement);
+	}
 }
 
 class Util {
